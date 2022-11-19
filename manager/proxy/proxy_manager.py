@@ -4,7 +4,7 @@ import time
 from common_sdk.util.id_generator import generate_common_id
 from dao.proxy_da_helper import ProxyDAHelper
 from manager.manager_base import ManagerBase
-import proto.proxy.proxy_pb2 as proxy_pb
+import spider_common.proto.proxy.proxy_pb2 as proxy_pb
 
 
 class ProxyManager(ManagerBase):

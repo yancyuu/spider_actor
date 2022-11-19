@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import proto.cookie.cookie_pb2 as cookie_pb
+import spider_common.proto.cookie.cookie_pb2 as cookie_pb
 
 from dao.constants import DBConstants
 from dao.mongodb_dao_helper import MongodbClientHelper
@@ -38,7 +38,8 @@ class CookieDAHelper(MongodbClientHelper):
         self.__set_matcher_not_used_status(matcher)
         if not matcher:
             return []
-        return await self._cookie_collection.find(matcher)
+        cookie_list = await self._cookie_collection.find(matcher)
+        return protobuf_transformer.batch_dict_to_protobuf(cookie_list, cookie_pb.CookieMessage)
 
     @staticmethod
     def __set_matcher_ids(matcher, ids):

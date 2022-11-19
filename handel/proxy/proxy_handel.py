@@ -2,7 +2,7 @@
 from common_sdk.data_transform.protobuf_transformer import protobuf_to_dict
 import random
 from manager.proxy.proxy_manager import ProxyManager
-import proto.proxy.proxy_pb2 as proxy_pb
+import spider_common.proto.proxy.proxy_pb2 as proxy_pb
 
 '''
     用于生成代理的handel

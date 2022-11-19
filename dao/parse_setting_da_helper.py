@@ -3,7 +3,7 @@
 from common_sdk.data_transform import protobuf_transformer
 from dao.constants import DBConstants
 from dao.mongodb_dao_helper import MongodbClientHelper
-import proto.spider.parse_setting_pb2 as parse_setting_pb
+import spider_common.proto.spider.parse_setting_pb2 as parse_setting_pb
 
 
 class ParseSettingDAHelper(MongodbClientHelper):

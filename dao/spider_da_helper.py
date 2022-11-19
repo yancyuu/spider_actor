@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import proto.spider.spider_pb2 as spider_pb
+import spider_common.proto.spider.spider_pb2 as spider_pb
 
 from dao.constants import DBConstants
 from dao.mongodb_dao_helper import MongodbClientHelper

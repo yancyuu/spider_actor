@@ -4,7 +4,7 @@ from common_sdk.data_transform.protobuf_transformer import protobuf_to_dict
 from client.spider_client import SpiderClient
 from builder.spider_builder import SpiderBuilder
 from manager.spider.spider_manager import SpiderManager
-import proto.spider.spider_pb2 as spider_pb
+import spider_common.proto.spider.spider_pb2 as spider_pb
 
 '''
     用于爬取网页的handel

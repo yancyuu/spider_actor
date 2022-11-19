@@ -1,0 +1,3 @@
+[submodule "spider_common"]
+	path = spider_common
+	url = git@github.com:yancyuu/spider_common.git
