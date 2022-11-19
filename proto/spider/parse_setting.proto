@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+message ParseSettingMessage {
+// 解析状态
+enum ParseStatus {
+    // 启动
+    ENABLED = 0;
+    // 关闭
+    DISABLED = 1;
+    // 删除
+    DELETED = 2;
+  }
+  // 唯一id
+  string id = 1;
+  ParseStatus status = 2;
+  // 解析规则
+  string parse_rules = 3;
+  // 创建时间
+  int32 create_time = 4;
+  // 删除时间
+  int32 delete_time = 5;
+  // 下一页的目标url规则
+  string next_page_rules = 6;
+  // 步骤
+  int32 step = 7;
+  // 总共爬取步骤
+  int32 total_step = 9;
+}

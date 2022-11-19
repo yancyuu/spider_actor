@@ -1,31 +1,36 @@
 syntax = "proto3";
-// 解析数据的数据格式
-// 消息通知
-message SpiderMessage {
-  enum SpiderStatus {
+
+// 爬虫的的基本数据格式
+message SpiderMessage{
+enum SpiderStatus {
     // 刚创建还未请求的时候
-    NONE = 0;
-    // 需要重试的
+    NONE= 0;
+    // 需要重试
     RETRY = 1;
-    // 需要解析
-    PARSE = 2;
     // 完成
-    FINISH = 3;
+    FINISH = 2;
   }
-  // 唯一id
-  string id = 1;
-  // 创建时间戳
-  string create_time = 2;
-  SpiderStatus status = 3;
-  string request_url = 4;
-  // 返回的消息
-  string response = 5;
-  // 重试时间
-  string retry_time = 6;
-  // 解析时间
-  string parse_time = 7;
-  // 请求方法
-  string request_method = 8;
-  // 请求参数
-  map<string ,string> param = 9;
+enum RequestMethod {
+    GET= 0;
+    POST = 1;
+  }
+// 唯一id
+string id = 1;
+// 目标url
+string target_url = 2;
+// 解析配置
+string parse_setting_id = 3;
+// 创建时间戳
+int64 create_time = 4;
+SpiderStatus status = 5;
+// 重试时间
+int64 retry_time = 6;
+// 解析时间
+int64 finish_time = 7;
+// 请求方法
+RequestMethod request_method = 8;
+// 步骤:根据解析配置中的步骤计算
+int32 step = 9;
 }
+
+

@@ -136,3 +136,6 @@ vim .env
 
     dapr run --app-id spider-actor --app-port 3000 --dapr-http-port 3500
 
+然后运行docker容器（记得修改挂载地址）
+
+    docker run -it --name spider -p 3000:3000 spider_actor_service:v1.0 

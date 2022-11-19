@@ -19,12 +19,11 @@ class CookieManager(ManagerBase):
         return self._da_helper
 
     @staticmethod
-    def create_cookie(cookie, cookie_map=None):
+    def create_cookie(cookie):
         if cookie is None:
             return
         cookie.id = generate_common_id()
-        cookie.cookie_map = cookie_map
-        cookie.status = cookie_pb.CookieMessage.cookieStatus.NONE
+        cookie.status = cookie_pb.CookieMessage.CookieStatus.INIT
         cookie.create_time = int(time.time())
         return cookie
 
@@ -53,7 +52,7 @@ class CookieManager(ManagerBase):
         if isinstance(status, str):
             status = cookie_pb.CookieMessage.CookieStatus.Value(status)
         if status == cookie_pb.CookieMessage.CookieStatus.USED:
-            cookie.use_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
+            cookie.use_time = int(time.time())
         cookie.status = status
 
 

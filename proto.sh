@@ -18,8 +18,6 @@ function walk() {
                 `$c`
                 if [ $? -eq 0 ];then
                     echo "$c ==> $?"
-                else
-                    exit -1
                 fi
 
             fi

@@ -28,6 +28,8 @@ class CookieHandel:
 
     async def generate_cookie(self, cookie_map):
         cookie = cookie_pb.CookieMessage()
-        self.__manager.create_cookie(cookie, cookie_map)
+        for key in cookie_map:
+            cookie.cookie_map[key] = cookie_map[key]
+        self.__manager.create_cookie(cookie)
         await self.__manager.add_or_update_cookie(cookie)
         return protobuf_to_dict(cookie)

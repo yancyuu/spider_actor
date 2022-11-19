@@ -18,9 +18,13 @@ class MongodbClientHelper(metaclass=SingletonMetaclass):
         username = os.environ.get("MONGODB_USER_NAME")
         password = os.environ.get("MONGODB_ROOT_PASSWORD")
         replica_set = os.environ.get("MONGODB_REPLICA_SET")
-        logger.info('mongodb://{}:{}@{}:{}/?replicaSet={}'.format(username, password, host, port, replica_set))
-        self.mongo_client = motor.motor_asyncio.AsyncIOMotorClient(
-            'mongodb://{}:{}@{}:{}/?replicaSet={}'.format(username, password, host, port, replica_set))
+        logger.info('mongodb://{}:{}@{}:{}/'.format(username, password, host, port, replica_set))
+        if replica_set:
+            self.mongo_client = motor.motor_asyncio.AsyncIOMotorClient(
+                'mongodb://{}:{}@{}:{}/?replicaSet={}'.format(username, password, host, port, replica_set))
+        else:
+            self.mongo_client = motor.motor_asyncio.AsyncIOMotorClient(
+                'mongodb://{}:{}@{}:{}/'.format(username, password, host, port))
         self.db = self.mongo_client[db]
         self.coll = coll
         self.mongo_client.get_io_loop = asyncio.get_event_loop

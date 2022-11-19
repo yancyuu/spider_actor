@@ -19,11 +19,11 @@ class SpiderManager(ManagerBase):
         return self._da_helper
 
     @staticmethod
-    def create_spider(spider, ip=None):
-        if ip is None:
+    def create_spider(spider, target_url=None):
+        if target_url is None:
             return
         spider.id = generate_common_id()
-        spider.ip = ip
+        spider.target_url = target_url
         spider.status = spider_pb.SpiderMessage.spiderStatus.NONE
         spider.create_time = int(time.time())
         return spider
@@ -48,9 +48,11 @@ class SpiderManager(ManagerBase):
         if status is None:
             return
         if isinstance(status, str):
-            status = spider_pb.SpiderMessage.spiderStatus.Value(status)
-        if status == spider_pb.SpiderMessage.spiderStatus.USED:
-            spider.use_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
+            status = spider_pb.SpiderMessage.SpiderStatus.Value(status)
+        if status == spider_pb.SpiderMessage.SpiderStatus.RETRY:
+            spider.retry_time = int(time.time())
+        if status == spider_pb.SpiderMessage.SpiderStatus.FINISH:
+            spider.finish_time = int(time.time())
         spider.status = status
 
 

@@ -50,7 +50,7 @@ class ProxyManager(ManagerBase):
         if isinstance(status, str):
             status = proxy_pb.ProxyMessage.proxyStatus.Value(status)
         if status == proxy_pb.ProxyMessage.proxyStatus.USED:
-            proxy.use_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
+            proxy.use_time = int(time.time())
         proxy.status = status
 
 

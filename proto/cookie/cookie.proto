@@ -13,7 +13,7 @@ message CookieMessage {
   // 唯一id
   string id = 1;
   // 创建时间
-  string create_time = 2;
+  int32 create_time = 2;
   CookieStatus status = 3;
   string request_url = 4;
   // 返回的消息
@@ -21,6 +21,6 @@ message CookieMessage {
   // cookie值
   map<string ,string> cookie_map = 6;//
   // 使用时间
-  string use_time = 7;
+  int32 use_time = 7;
 
 }

@@ -13,10 +13,10 @@ message ProxyMessage {
   // 唯一id
   string id = 1;
   // 创建时间戳
-  string create_time = 2;
+  int32 create_time = 2;
   ProxyStatus status = 3;
   // 使用时间
-  string use_time = 4;
+  int32 use_time = 4;
   // 代理url值
   string url = 5;
 }
