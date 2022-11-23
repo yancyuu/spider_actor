@@ -10,6 +10,10 @@ class SpiderActorInterface(ActorInterface):
     async def generate_spider(self, data: dict) -> object:
         ...
 
+    @actormethod(name="generateParseSettings")
+    async def generate_parse_settings(self, data: dict) -> object:
+        ...
+
     @actormethod(name="startCrawling")
     async def start_crawling(self) -> object:
         ...
