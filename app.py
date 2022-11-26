@@ -6,7 +6,7 @@ from dapr.conf import settings
 from fastapi import FastAPI
 from handel.proxy.proxy_actor import ProxyActor
 from handel.cookie.cookie_actor import CookieActor
-from handel.spider.spider_actor import SpiderActor
+from handel.spider_setting.spider_setting_actor import SpiderSettingActor
 import json
 import uvicorn
 import ujson
@@ -53,7 +53,7 @@ async def startup_event():
     # 生成cookie的actor
     await actor.register_actor(CookieActor)
     # 生成基础爬虫数据结构的actor
-    await actor.register_actor(SpiderActor)
+    await actor.register_actor(SpiderSettingActor)
 
 
 if __name__ == "__main__":

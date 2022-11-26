@@ -1,7 +1,7 @@
 from handel.proxy.proxy_handel import ProxyHandel
 import datetime
 from dapr.actor import Actor, Remindable
-from handel.proxy.proxy_actor_interface import ProxyActorInterface
+from spider_sdk.interface.proxy_actor_interface import ProxyActorInterface
 from typing import Optional
 
 

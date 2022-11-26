@@ -1,7 +1,7 @@
 import datetime
 from dapr.actor import Actor, Remindable
 from handel.cookie.cookie_handel import CookieHandel
-from handel.cookie.cookie_actor_interface import CookieActorInterface
+from spider_sdk.interface.cookie_actor_interface import CookieActorInterface
 from typing import Optional
 
 

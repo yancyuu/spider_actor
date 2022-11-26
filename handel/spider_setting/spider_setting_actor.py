@@ -1,11 +1,11 @@
-from handel.spider.spider_handel import SpiderHandel
+from handel.spider_setting.spider_setting_handel import SpiderSettingHandel
 import datetime
 from dapr.actor import Actor, Remindable
-from handel.spider.spider_actor_interface import SpiderActorInterface
+from spider_sdk.interface.spider_setting_actor_interface import SpiderSettingActorInterface
 from typing import Optional
 
 
-class SpiderActor(Actor, SpiderActorInterface, Remindable):
+class SpiderSettingActor(Actor, SpiderSettingActorInterface, Remindable):
     """Implements DemoActor actor service
     This shows the usage of the below actor features:
     1. Actor method invocation
@@ -15,16 +15,16 @@ class SpiderActor(Actor, SpiderActorInterface, Remindable):
     """
 
     def __init__(self, ctx, actor_id):
-        super(SpiderActor, self).__init__(ctx, actor_id)
-        self.__handel = SpiderHandel(actor_id)
+        super(SpiderSettingActor, self).__init__(ctx, actor_id)
+        self.__handel = SpiderSettingHandel(actor_id)
 
-    async def list_spiders(self) -> object:
-        """ 提供给其他服务展示spider数据"""
-        return await self.__handel.list_spiders()
-
-    async def generate_spider(self, data: dict) -> object:
+    async def generate_parse_settings(self, data: dict) -> object:
         """ 提供给其他服务创建一条spider数据"""
-        return await self.__handel.generate_spider(data)
+        return await self.__handel.generate_parse_setting(data)
+
+    async def delete_parse_settings(self, data: dict) -> object:
+        """ 提供给其他服务创建一条spider数据"""
+        return await self.__handel.delete_parse_setting(data)
 
     async def start_crawling(self) -> object:
         """ 提供给其他服务开始爬取spider数据"""

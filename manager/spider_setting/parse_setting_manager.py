@@ -19,9 +19,7 @@ class ParseSettingManager(ManagerBase):
         return self._da_helper
 
     @staticmethod
-    def create_parse_setting(parse_setting, ip=None):
-        if ip is None:
-            return
+    def create_parse_setting(parse_setting):
         parse_setting.id = generate_common_id()
         parse_setting.create_time = int(time.time())
         return parse_setting
@@ -37,6 +35,9 @@ class ParseSettingManager(ManagerBase):
             status=status
         )
         return proxies
+
+    def delete_parse_setting(self, parse_setting):
+        self.__update_status(parse_setting, parse_setting_pb.ParseSettingMessage.ParseStatus.DELETED)
 
     async def add_or_update_parse_setting(self, parse_setting):
         await self.da_helper.add_or_update_parse_setting(parse_setting)
