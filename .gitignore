@@ -1,6 +1,6 @@
 .env
 init
 *.pyc
-proto/proxy/proxy_pb2.py
-proto/cookie/cookie_pb2.py
-proto/spider/spider_pb2.py
+spider_common/proto/proxy/proxy_pb2.py
+spider_common/proto/cookie/cookie_pb2.py
+spider_common/proto/spider/spider_pb2.py

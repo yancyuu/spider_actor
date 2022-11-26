@@ -4,7 +4,7 @@ import time
 from common_sdk.util.id_generator import generate_common_id
 from dao.spider_da_helper import SpiderDAHelper
 from manager.manager_base import ManagerBase
-import spider_common.proto.spider.spider_pb2 as spider_pb
+import proto.spider.spider_pb2 as spider_pb
 
 
 class SpiderManager(ManagerBase):

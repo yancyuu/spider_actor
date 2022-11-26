@@ -4,7 +4,7 @@ import time
 from common_sdk.util.id_generator import generate_common_id
 from dao.cookie_da_helper import CookieDAHelper
 from manager.manager_base import ManagerBase
-import spider_common.proto.cookie.cookie_pb2 as cookie_pb
+import proto.cookie.cookie_pb2 as cookie_pb
 
 
 class CookieManager(ManagerBase):

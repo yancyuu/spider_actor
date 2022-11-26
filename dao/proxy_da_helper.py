@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import spider_common.proto.proxy.proxy_pb2 as proxy_pb
+import proto.proxy.proxy_pb2 as proxy_pb
 
 from dao.constants import DBConstants
 from dao.mongodb_dao_helper import MongodbClientHelper

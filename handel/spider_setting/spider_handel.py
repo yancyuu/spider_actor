@@ -4,8 +4,8 @@ from common_sdk.data_transform import protobuf_transformer
 from sdk.client.spider_client import SpiderClient
 from sdk.builder.spider_builder import SpiderBuilder
 from manager.spider.spider_manager import SpiderManager
-import spider_common.proto.spider.spider_pb2 as spider_pb
-import spider_common.proto.spider.parse_setting_pb2 as parse_setting_pb
+import proto.spider.spider_pb2 as spider_pb
+import proto.spider.parse_setting_pb2 as parse_setting_pb
 
 '''
     用于爬取网页的handel

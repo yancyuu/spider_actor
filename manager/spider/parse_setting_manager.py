@@ -4,7 +4,7 @@ import time
 from common_sdk.util.id_generator import generate_common_id
 from dao.parse_setting_da_helper import ParseSettingDAHelper
 from manager.manager_base import ManagerBase
-import spider_common.proto.spider.parse_setting_pb2 as parse_setting_pb
+import proto.spider.parse_setting_pb2 as parse_setting_pb
 
 
 class ParseSettingManager(ManagerBase):

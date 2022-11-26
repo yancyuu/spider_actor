@@ -2,7 +2,7 @@
 from common_sdk.data_transform.protobuf_transformer import protobuf_to_dict, batch_protobuf_to_dict
 from common_sdk.logging.logger import logger
 from manager.cookie.cookie_manager import CookieManager
-import spider_common.proto.cookie.cookie_pb2 as cookie_pb
+import proto.cookie.cookie_pb2 as cookie_pb
 import random
 
 
