@@ -3,7 +3,7 @@
 import time
 from common_sdk.util.id_generator import generate_common_id
 from dao.parse_setting_da_helper import ParseSettingDAHelper
-from manager.manager_base import ManagerBase
+from manager.manager_base import ManagerBase, ignore_none_param
 import proto.spider.parse_setting_pb2 as parse_setting_pb
 
 
@@ -27,8 +27,11 @@ class ParseSettingManager(ManagerBase):
     async def get_parse_setting(self, id=None):
         return await self.da_helper.get_parse_setting(id=id)
 
-    def update_parse_setting(self, parse_setting, status=None):
+    @ignore_none_param
+    def update_parse_setting(self, parse_setting, parse_rules=None, next_spider_rules=None, status=None):
         self.__update_status(parse_setting, status)
+        self.__update_parse_rules(parse_setting, parse_rules)
+        self.__update_next_spider_rules(parse_setting, next_spider_rules)
 
     async def list_parse_settings(self, status=None):
         proxies = await self.da_helper.list_parse_settings(
@@ -42,18 +45,18 @@ class ParseSettingManager(ManagerBase):
     async def add_or_update_parse_setting(self, parse_setting):
         await self.da_helper.add_or_update_parse_setting(parse_setting)
 
-    @staticmethod
-    def __update_status(parse_setting, status):
-        if status is None:
-            return
+    @ignore_none_param
+    def __update_status(self, parse_setting, status):
         if isinstance(status, str):
             status = parse_setting_pb.ParseSettingMessage.ParseStatus.Value(status)
         if status == parse_setting_pb.ParseSettingMessage.ParseStatus.DELETED:
             parse_setting.delete_time = int(time.time())
         parse_setting.status = status
 
+    @ignore_none_param
+    def __update_parse_rules(self, parse_setting, parse_rules):
+        parse_setting.parse_rules = parse_rules
 
-
-
-
-
+    @ignore_none_param
+    def __update_next_spider_rules(self, parse_setting, next_spider_rules):
+        parse_setting.next_spider_rules = next_spider_rules

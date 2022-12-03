@@ -45,6 +45,24 @@ class SpiderSettingHandel:
         return protobuf_transformer.protobuf_to_dict(parse_setting)
 
     '''
+            更新一条解析规则
+    '''
+    async def update_parse_setting(self, data: dict):
+        id = data.get("id")
+        if not id:
+            raise errors.Error(error_codes.MISSING_ID)
+        parse_setting = await self.__parse_setting_manager.get_parse_setting(id)
+        if not parse_setting:
+            raise errors.Error(error_codes.ENTITY_NOT_EXISTS, action="更新解析规则")
+        self.__parse_setting_manager.update_parse_setting(
+            parse_setting=parse_setting,
+            parse_rules=data.get("parseRules"),
+            next_spider_rules=data.get("nextSpiderRules"),
+            status=data.get("status"))
+        await self.__parse_setting_manager.add_or_update_parse_setting(parse_setting)
+        return protobuf_transformer.protobuf_to_dict(parse_setting)
+
+    '''
         删除一条解析规则
     '''
     async def delete_parse_setting(self, data: dict):

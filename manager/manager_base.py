@@ -7,7 +7,8 @@ def ignore_none_param(fn):
     """ 当参数里有None时,被装饰的函数将不会被调用
     仅用于更新实体字段时使用
     """
-    def inner(*args):
+
+    def inner(*args, **kwargs):
         has_none_param = False
         for arg in args:
             if arg is None:
@@ -15,11 +16,12 @@ def ignore_none_param(fn):
                 break
         if has_none_param:
             return
-        return fn(*args)
+        return fn(*args, **kwargs)
+
     return inner
 
 
-class ManagerBase():
+class ManagerBase:
     """所有业务逻辑处理相关的ManagerBase基类。"""
 
     @property

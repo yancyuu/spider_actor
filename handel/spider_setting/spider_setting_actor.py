@@ -22,6 +22,10 @@ class SpiderSettingActor(Actor, SpiderSettingActorInterface, Remindable):
         """ 提供给其他服务创建一条spider数据"""
         return await self.__handel.generate_parse_setting(data)
 
+    async def update_parse_setting(self, data: dict) -> object:
+        """ 提供给其他服务创建一条spider数据"""
+        return await self.__handel.update_parse_setting(data)
+
     async def delete_parse_settings(self, data: dict) -> object:
         """ 提供给其他服务创建一条spider数据"""
         return await self.__handel.delete_parse_setting(data)

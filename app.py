@@ -41,7 +41,6 @@ app = FastAPI(title=f'spider-actor-service')
 
 app.debug = True
 app.json_encoder = UJSONEncoder
-settings.DAPR_RUNTIME_HOST = "192.168.1.10"
 # Add Dapr Actor Extension
 actor = DaprActor(app)
 
