@@ -37,7 +37,8 @@ class ParseSettingDAHelper(MongodbClientHelper):
         self.__set_matcher_ids(matcher, ids)
         if not matcher:
             return []
-        return await self._parse_setting_collection.find(matcher)
+        parse_settings = await self._parse_setting_collection.find(matcher)
+        return protobuf_transformer.batch_dict_to_protobuf(parse_settings, parse_setting_pb.ParseSettingMessage)
 
     @staticmethod
     def __set_matcher_ids(matcher, ids):
