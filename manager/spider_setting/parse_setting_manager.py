@@ -33,9 +33,10 @@ class ParseSettingManager(ManagerBase):
         self.__update_parse_rules(parse_setting, parse_rules)
         self.__update_next_spider_rules(parse_setting, next_spider_rules)
 
-    async def list_parse_settings(self, status=None):
+    async def list_parse_settings(self, status=None, ids=None):
         proxies = await self.da_helper.list_parse_settings(
-            status=status
+            status=status,
+            ids=ids,
         )
         return proxies
 

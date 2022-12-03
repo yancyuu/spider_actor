@@ -5,7 +5,8 @@ from spider_sdk.client.spider_setting_client import SpiderSettingClient
 from spider_sdk.builder.spider_setting_builder import SpiderSettingBuilder
 from manager.spider_setting.parse_setting_manager import ParseSettingManager
 import proto.spider.parse_setting_pb2 as parse_setting_pb
-from handel import error_codes, errors
+from handel import errors, error_codes
+from handel.base_responses import jsonify_response
 
 '''
     用于爬取网页的handel
@@ -33,11 +34,13 @@ class SpiderSettingHandel:
         # 修改数据库状态和返回值
         if response:
             # 根据解析配置开始解析
-            parse_settings = protobuf_transformer.dict_to_protobuf(data.get("parseSettings"), parse_setting_pb.ParseSettingMessage)
+            parse_settings = protobuf_transformer.dict_to_protobuf(data.get("parseSettings"),
+                                                                   parse_setting_pb.ParseSettingMessage)
 
     '''
         创建一条解析规则
     '''
+
     async def generate_parse_setting(self, data: dict):
         parse_setting = protobuf_transformer.dict_to_protobuf(data, parse_setting_pb.ParseSettingMessage)
         self.__parse_setting_manager.create_parse_setting(parse_setting)
@@ -47,24 +50,43 @@ class SpiderSettingHandel:
     '''
             更新一条解析规则
     '''
+
     async def update_parse_setting(self, data: dict):
         id = data.get("id")
         if not id:
-            raise errors.Error(error_codes.MISSING_ID)
+            error = errors.Error(error_codes.MISSING_ID)
+            return jsonify_response(status_response=(error.errcode, error.errmsg))
         parse_setting = await self.__parse_setting_manager.get_parse_setting(id)
         if not parse_setting:
-            raise errors.Error(error_codes.ENTITY_NOT_EXISTS, action="更新解析规则")
+            error = errors.Error(error_codes.ENTITY_NOT_EXISTS, action="更新解析规则")
+            return jsonify_response(status_response=(error.errcode, error.errmsg))
         self.__parse_setting_manager.update_parse_setting(
             parse_setting=parse_setting,
             parse_rules=data.get("parseRules"),
             next_spider_rules=data.get("nextSpiderRules"),
             status=data.get("status"))
         await self.__parse_setting_manager.add_or_update_parse_setting(parse_setting)
-        return protobuf_transformer.protobuf_to_dict(parse_setting)
+        data = protobuf_transformer.protobuf_to_dict(parse_setting)
+        return jsonify_response(data=data)
+
+    '''
+           查询规则列表
+    '''
+    async def list_parse_settings(self, data: dict):
+        ids = data.get("ids")
+        if not ids:
+            error = errors.Error(error_codes.MISSING_ID)
+            return jsonify_response(status_response=(error.errcode, error.errmsg))
+        parse_settings = await self.__parse_setting_manager.list_parse_settings(ids=ids)
+        if not parse_settings:
+            error = errors.Error(error_codes.ENTITY_NOT_EXISTS, action="获取解析规则")
+            return jsonify_response(status_response=(error.errcode, error.errmsg))
+        return jsonify_response(protobuf_transformer.batch_protobuf_to_dict(parse_settings))
 
     '''
         删除一条解析规则
     '''
+
     async def delete_parse_setting(self, data: dict):
         id = data.get("id")
         if not id:
@@ -82,5 +104,3 @@ class SpiderSettingHandel:
 
     async def parse_spider(self, response):
         pass
-
-

@@ -23,15 +23,18 @@ class ParseSettingDAHelper(MongodbClientHelper):
 
     async def get_parse_setting(self, id=None):
         matcher = {}
+        self.__set_active_status(matcher)
         self.__set_matcher_id(matcher, id)
         if not matcher:
             return
         parse_setting = await self._parse_setting_collection.find_one(matcher)
         return protobuf_transformer.dict_to_protobuf(parse_setting, parse_setting_pb.ParseSettingMessage)
 
-    async def list_parse_settings(self, status=None):
+    async def list_parse_settings(self, status=None, ids=None):
         matcher = {}
+        self.__set_active_status(matcher)
         self.__set_matcher_status(matcher, status)
+        self.__set_matcher_ids(matcher, ids)
         if not matcher:
             return []
         return await self._parse_setting_collection.find(matcher)
@@ -49,6 +52,10 @@ class ParseSettingDAHelper(MongodbClientHelper):
         matcher.update({"id": id})
 
     @staticmethod
+    def __set_active_status(matcher):
+        matcher.update({"status": {"$ne": "DELETED"}})
+
+    @staticmethod
     def __set_matcher_status(matcher, status):
         if status is None:
             return
@@ -57,4 +64,3 @@ class ParseSettingDAHelper(MongodbClientHelper):
         elif isinstance(status, parse_setting_pb.ParseSettingMessage.ParseStatus):
             matcher.update({"status": parse_setting_pb.ParseSettingMessage.ParseStatus.Name(status)})
         matcher.update({"status": status})
-
