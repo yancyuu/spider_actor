@@ -62,7 +62,7 @@ class SpiderSettingHandel:
             return jsonify_response(status_response=(error.errcode, error.errmsg))
         self.__parse_setting_manager.update_parse_setting(
             parse_setting=parse_setting,
-            parse_rules=data.get("parseRules"),
+            parse_type=data.get("parseType"),
             next_spider_rules=data.get("nextSpiderRules"),
             status=data.get("status"))
         await self.__parse_setting_manager.add_or_update_parse_setting(parse_setting)
