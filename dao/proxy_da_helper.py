@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import proto.proxy.proxy_pb2 as proxy_pb
+import spider_common.proto.proxy.proxy_pb2 as proxy_pb
 
 from dao.constants import DBConstants
 from dao.mongodb_dao_helper import MongodbClientHelper
@@ -65,4 +65,3 @@ class ProxyDAHelper(MongodbClientHelper):
     @staticmethod
     def __set_matcher_not_used_status(matcher):
         matcher.update({"status": {"$ne": "USED"}})
-
