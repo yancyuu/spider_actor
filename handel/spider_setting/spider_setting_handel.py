@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 from common_sdk.logging.logger import logger
 from common_sdk.data_transform import protobuf_transformer
-from spider_sdk.client.spider_setting_client import SpiderSettingClient
-from spider_sdk.builder.spider_setting_builder import SpiderSettingBuilder
 from manager.spider_setting.parse_setting_manager import ParseSettingManager
 import proto.spider.parse_setting_pb2 as parse_setting_pb
 from handel import errors, error_codes
@@ -18,24 +16,7 @@ class SpiderSettingHandel:
     def __init__(self, actor_id):
         self.actor_id = actor_id
         self.spider_id = actor_id.id
-        self.__setting_builder = SpiderSettingBuilder()
         self.__parse_setting_manager = ParseSettingManager()
-
-    '''
-        开始爬取（主要逻辑）
-    '''
-
-    async def start_crawling(self, data):
-        # 查找状态为None的url
-        logger.info("开始爬取 {}".format(data))
-        # 搜索查询页
-        client = SpiderSettingClient(self.__setting_builder, data.get("id"))
-        response = client.get_search()
-        # 修改数据库状态和返回值
-        if response:
-            # 根据解析配置开始解析
-            parse_settings = protobuf_transformer.dict_to_protobuf(data.get("parseSettings"),
-                                                                   parse_setting_pb.ParseSettingMessage)
 
     '''
         创建一条解析规则
@@ -52,6 +33,7 @@ class SpiderSettingHandel:
     '''
 
     async def update_parse_setting(self, data: dict):
+        logger.info("需要更新的数据{}".format(data))
         id = data.get("id")
         if not id:
             error = errors.Error(error_codes.MISSING_ID)
@@ -64,7 +46,10 @@ class SpiderSettingHandel:
             parse_setting=parse_setting,
             parse_type=data.get("parseType"),
             next_spider_rules=data.get("nextSpiderRules"),
-            status=data.get("status"))
+            parse_rules=data.get("parseRules"),
+            status=data.get("status"),
+            request_method=data.get("requestMethod"),
+            enable_next_spider_repeated=data.get("enableNextSpiderRepeated"))
         await self.__parse_setting_manager.add_or_update_parse_setting(parse_setting)
         data = protobuf_transformer.protobuf_to_dict(parse_setting)
         return jsonify_response(data=data)
@@ -98,9 +83,3 @@ class SpiderSettingHandel:
         await self.__parse_setting_manager.add_or_update_parse_setting(parse_setting)
         return protobuf_transformer.protobuf_to_dict(parse_setting)
 
-    '''
-        解析内容（从当前的html中解析a标签的href链接）
-    '''
-
-    async def parse_spider(self, response):
-        pass
